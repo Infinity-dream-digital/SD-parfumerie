@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SD parfumerie — Maison de Parfumerie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --gold:#b8860b;
+  --gold-light:#d4a017;
+  --gold-pale:#f5e6c0;
+  --cream:#faf7f2;
+  --dark:#1a1410;
+  --dark-mid:#2d2520;
+  --gray:#6b6460;
+  --border:#e8dfd0;
+}
+body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--dark);overflow-x:hidden}
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(250,247,242,0.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:0 5vw}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:70px}
+.logo{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;letter-spacing:6px;color:var(--dark);text-decoration:none}
+.logo span{color:var(--gold); font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;text-decoration:none}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{font-size:12px;font-weight:300;letter-spacing:3px;text-transform:uppercase;text-decoration:none;color:var(--gray);transition:color .3s}
+.nav-links a:hover{color:var(--gold)}
+.nav-actions{display:flex;align-items:center;gap:20px}
+.cart-btn{position:relative;cursor:pointer;border:none;background:none;font-size:20px;color:var(--dark)}
+.cart-count{position:absolute;top:-6px;right:-8px;background:var(--gold);color:#fff;font-size:9px;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:500}
+.search-input{border:none;border-bottom:1px solid var(--border);background:none;padding:4px 8px;font-family:'Jost',sans-serif;font-size:12px;letter-spacing:1px;outline:none;color:var(--dark);width:140px;transition:border-color .3s}
+.search-input:focus{border-color:var(--gold)}
+/* HERO */
+.hero{height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;padding-top:70px}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,#faf7f2 0%,#f0e8d5 50%,#e8dfc8 100%)}
+.hero-ornament{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;border-radius:50%;border:1px solid rgba(184,134,11,0.15);animation:pulse 4s ease-in-out infinite}
+.hero-ornament:after{content:'';position:absolute;inset:30px;border-radius:50%;border:1px solid rgba(184,134,11,0.1)}
+@keyframes pulse{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.03)}}
+.hero-content{position:relative;z-index:1}
+.hero-eyebrow{font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:24px;font-weight:300}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(56px,8vw,100px);font-weight:300;line-height:1;margin-bottom:24px;color:var(--dark)}
+.hero-title em{font-style:italic;color:var(--gold)}
+.hero-sub{font-size:14px;font-weight:200;letter-spacing:2px;color:var(--gray);margin-bottom:48px;max-width:400px}
+.btn-primary{display:inline-block;padding:16px 48px;background:var(--dark);color:#fff;font-size:11px;letter-spacing:4px;text-transform:uppercase;text-decoration:none;font-family:'Jost',sans-serif;font-weight:300;cursor:pointer;border:none;transition:all .3s}
+.btn-primary:hover{background:var(--gold)}
+.btn-outline{display:inline-block;padding:15px 48px;background:none;color:var(--dark);font-size:11px;letter-spacing:4px;text-transform:uppercase;font-family:'Jost',sans-serif;font-weight:300;cursor:pointer;border:1px solid var(--dark);transition:all .3s;margin-left:16px;text-decoration:none}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold)}
+/* SECTIONS */
+section{padding:100px 5vw}
+.section-eyebrow{font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;font-weight:300}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,4vw,52px);font-weight:300;margin-bottom:16px;line-height:1.1}
+.section-sub{font-size:14px;font-weight:200;color:var(--gray);max-width:500px;line-height:1.8}
+/* FEATURED */
+.featured{background:#fff}
+.featured-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:60px}
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:40px}
+.product-card{cursor:pointer;group:true}
+.product-img{aspect-ratio:3/4;background:var(--cream);position:relative;overflow:hidden;margin-bottom:20px}
+.product-img-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:80px;transition:transform .6s ease}
+.product-card:hover .product-img-inner{transform:scale(1.05)}
+.product-badge{position:absolute;top:16px;left:16px;background:var(--gold);color:#fff;font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;font-weight:400}
+.product-badge.nouveau{background:var(--dark)}
+.product-wishlist{position:absolute;top:16px;right:16px;width:34px;height:34px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;border:none;opacity:0;transition:opacity .3s}
+.product-card:hover .product-wishlist{opacity:1}
+.product-info{ }
+.product-house{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;font-weight:300}
+.product-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;margin-bottom:4px}
+.product-notes{font-size:12px;color:var(--gray);margin-bottom:12px;font-weight:300;letter-spacing:.5px}
+.product-bottom{display:flex;align-items:center;justify-content:space-between}
+.product-price{font-size:18px;font-weight:300;color:var(--dark)}
+.product-old-price{font-size:13px;color:var(--gray);text-decoration:line-through;margin-right:8px}
+.add-cart-btn{padding:8px 18px;background:var(--dark);color:#fff;border:none;font-size:10px;letter-spacing:2px;text-transform:uppercase;font-family:'Jost',sans-serif;cursor:pointer;transition:background .3s}
+.add-cart-btn:hover{background:var(--gold)}
+/* BANNER */
+.banner{background:var(--dark);color:#fff;text-align:center;padding:80px 5vw}
+.banner .section-title{color:#fff}
+.banner .section-sub{color:rgba(255,255,255,0.6);margin:0 auto 40px}
+/* CATEGORIES */
+.categories-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:60px}
+.cat-item{aspect-ratio:4/5;position:relative;overflow:hidden;cursor:pointer}
+.cat-bg{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:100px;transition:transform .6s ease}
+.cat-item:hover .cat-bg{transform:scale(1.08)}
+.cat-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(26,20,16,0.8) 0%,rgba(26,20,16,0.2) 60%,transparent 100%);display:flex;align-items:flex-end;padding:32px;transition:background .4s}
+.cat-name{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:#fff}
+.cat-count{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-top:4px;font-weight:300}
+/* NEWSLETTER */
+.newsletter{background:var(--gold-pale);text-align:center}
+.newsletter-form{display:flex;max-width:440px;margin:32px auto 0;gap:0}
+.newsletter-input{flex:1;border:1px solid var(--border);background:#fff;padding:14px 20px;font-family:'Jost',sans-serif;font-size:13px;outline:none;border-right:none}
+.newsletter-btn{padding:14px 24px;background:var(--dark);color:#fff;border:none;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-family:'Jost',sans-serif;cursor:pointer;white-space:nowrap}
+/* FOOTER */
+footer{background:var(--dark-mid);color:rgba(255,255,255,0.7);padding:60px 5vw 30px}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px}
+.footer-brand .logo{color:#fff;font-size:24px}
+.footer-desc{font-size:13px;font-weight:200;line-height:1.9;margin-top:16px;color:rgba(255,255,255,0.5)}
+.footer-col h4{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:20px;font-weight:400}
+.footer-col ul{list-style:none}
+.footer-col ul li{margin-bottom:10px}
+.footer-col ul li a{font-size:13px;font-weight:200;color:rgba(255,255,255,0.5);text-decoration:none;transition:color .3s}
+.footer-col ul li a:hover{color:#fff}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.1);padding-top:24px;display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:200;color:rgba(255,255,255,0.35)}
+/* CART SIDEBAR */
+.cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:2000;opacity:0;pointer-events:none;transition:opacity .3s}
+.cart-overlay.open{opacity:1;pointer-events:all}
+.cart-sidebar{position:fixed;top:0;right:-420px;width:420px;height:100vh;background:#fff;z-index:2001;transition:right .4s ease;display:flex;flex-direction:column;box-shadow:-4px 0 24px rgba(0,0,0,0.1)}
+.cart-sidebar.open{right:0}
+.cart-head{padding:24px 28px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.cart-head h3{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:400}
+.cart-close{background:none;border:none;font-size:22px;cursor:pointer;color:var(--gray)}
+.cart-items{flex:1;overflow-y:auto;padding:20px 28px}
+.cart-item{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--border)}
+.cart-item-img{width:70px;height:70px;background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0}
+.cart-item-info{flex:1}
+.cart-item-name{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:400;margin-bottom:4px}
+.cart-item-sub{font-size:11px;color:var(--gray);letter-spacing:1px;margin-bottom:8px}
+.cart-item-price{font-size:16px;font-weight:300}
+.qty-ctrl{display:flex;align-items:center;gap:10px;margin-top:8px}
+.qty-btn{width:26px;height:26px;border:1px solid var(--border);background:none;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.qty-btn:hover{background:var(--dark);color:#fff;border-color:var(--dark)}
+.qty-num{font-size:13px;font-weight:400;min-width:20px;text-align:center}
+.remove-btn{background:none;border:none;color:var(--gray);cursor:pointer;font-size:16px;padding:4px;margin-left:auto;align-self:flex-start}
+.cart-footer{padding:24px 28px;border-top:1px solid var(--border);background:var(--cream)}
+.cart-subtotal{display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px;color:var(--gray)}
+.cart-total{display:flex;justify-content:space-between;font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;margin-bottom:20px}
+.checkout-btn{width:100%;padding:16px;background:var(--dark);color:#fff;border:none;font-size:11px;letter-spacing:4px;text-transform:uppercase;font-family:'Jost',sans-serif;cursor:pointer;transition:background .3s;margin-bottom:10px}
+.checkout-btn:hover{background:var(--gold)}
+.cart-empty{text-align:center;padding:60px 20px;color:var(--gray)}
+.cart-empty p{font-family:'Cormorant Garamond',serif;font-size:22px;margin-bottom:8px}
+.cart-empty span{font-size:12px;font-weight:200}
+/* MODAL PRODUCT */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:3000;opacity:0;pointer-events:none;transition:opacity .3s;display:flex;align-items:center;justify-content:center;padding:40px}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal-box{background:#fff;max-width:800px;width:100%;max-height:90vh;overflow-y:auto;display:grid;grid-template-columns:1fr 1fr;animation:slideUp .4s ease}
+@keyframes slideUp{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-img{background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:140px;aspect-ratio:1;min-height:400px}
+.modal-info{padding:48px 40px;display:flex;flex-direction:column}
+.modal-house{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.modal-name{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;margin-bottom:8px;line-height:1}
+.modal-notes{font-size:12px;color:var(--gray);margin-bottom:16px;letter-spacing:.5px}
+.modal-desc{font-size:14px;font-weight:200;line-height:1.9;color:var(--gray);margin-bottom:24px;border-top:1px solid var(--border);padding-top:24px}
+.modal-price{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--gold);margin-bottom:24px}
+.size-select{width:100%;padding:12px 16px;border:1px solid var(--border);background:#fff;font-family:'Jost',sans-serif;font-size:13px;outline:none;margin-bottom:16px;color:var(--dark);cursor:pointer}
+.modal-add{width:100%;padding:16px;background:var(--dark);color:#fff;border:none;font-size:11px;letter-spacing:4px;text-transform:uppercase;font-family:'Jost',sans-serif;cursor:pointer;transition:background .3s;margin-top:auto}
+.modal-add:hover{background:var(--gold)}
+.modal-close{position:sticky;top:0;margin-left:auto;display:block;background:none;border:none;font-size:22px;cursor:pointer;color:var(--gray);padding:16px;float:right}
+/* TOAST */
+.toast{position:fixed;bottom:32px;right:32px;background:var(--dark);color:#fff;padding:14px 24px;font-size:12px;letter-spacing:2px;text-transform:uppercase;z-index:9999;transform:translateY(80px);opacity:0;transition:all .4s;font-family:'Jost',sans-serif}
+.toast.show{transform:translateY(0);opacity:1}
+/* PROMO BAR */
+.promo-bar{background:var(--gold);color:#fff;text-align:center;font-size:11px;letter-spacing:3px;text-transform:uppercase;padding:10px;font-weight:300}
+/* CHECKOUT MODAL */
+.checkout-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:4000;opacity:0;pointer-events:none;transition:opacity .3s;display:flex;align-items:center;justify-content:center;padding:24px}
+.checkout-overlay.open{opacity:1;pointer-events:all}
+.checkout-box{background:#fff;max-width:480px;width:100%;padding:40px;animation:slideUp .3s ease;max-height:90vh;overflow-y:auto}
+.checkout-box h3{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;margin-bottom:8px}
+.checkout-box p{font-size:13px;color:var(--gray);margin-bottom:28px;font-weight:200}
+.co-group{margin-bottom:18px}
+.co-group label{display:block;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);margin-bottom:7px;font-weight:400}
+.co-group input,.co-group textarea{width:100%;padding:12px 14px;border:1px solid var(--border);font-family:'Jost',sans-serif;font-size:13px;outline:none;color:var(--dark);transition:border-color .2s}
+.co-group input:focus,.co-group textarea:focus{border-color:var(--gold)}
+.co-group textarea{min-height:70px;resize:vertical}
+.checkout-summary{background:var(--cream);padding:16px;margin-bottom:20px;font-size:13px}
+.checkout-summary-title{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);margin-bottom:10px}
+.checkout-summary-row{display:flex;justify-content:space-between;padding:4px 0;font-weight:300}
+.checkout-summary-total{display:flex;justify-content:space-between;font-family:'Cormorant Garamond',serif;font-size:18px;margin-top:8px;padding-top:8px;border-top:1px solid var(--border)}
+
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+/* NO PRODUCTS */
+.no-products{text-align:center;padding:80px;color:var(--gray);grid-column:1/-1}
+.no-products p{font-family:'Cormorant Garamond',serif;font-size:28px;margin-bottom:8px}
+/* FILTERS */
+.filter-bar{display:flex;gap:12px;margin-bottom:40px;flex-wrap:wrap;align-items:center}
+.filter-btn{padding:8px 20px;border:1px solid var(--border);background:none;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-family:'Jost',sans-serif;cursor:pointer;transition:all .3s;color:var(--gray)}
+.filter-btn.active,.filter-btn:hover{background:var(--dark);color:#fff;border-color:var(--dark)}
+/* RATINGS */
+.stars{color:var(--gold);font-size:11px;margin-bottom:4px}
+/* AVIS */
+.avis-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px;margin-top:48px}
+.avis-card{background:#fff;padding:28px;border-left:3px solid var(--gold)}
+.avis-text{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;font-style:italic;line-height:1.6;margin-bottom:16px;color:var(--dark)}
+.avis-author{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold)}
+@media(max-width:768px){
+  .categories-grid{grid-template-columns:1fr 1fr}
+  .footer-top{grid-template-columns:1fr 1fr}
+  .modal-box{grid-template-columns:1fr}
+  .modal-img{min-height:250px;font-size:80px}
+  .cart-sidebar{width:100%;right:-100%}
+  .nav-links{display:none}
+  .featured-header{flex-direction:column;gap:16px}
+  .hero-title{font-size:52px}
+}
+</style>
+</head>
+<body>
+
+<div class="promo-bar">✦ Livraison gratuite dès 75 000 FCFA · Code : LUMIERE10 pour -10% ✦</div>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo">SD<span>Parfumerie</span></a>
+    <ul class="nav-links">
+      <li><a href="#boutique">Boutique</a></li>
+      <li><a href="#collections">Collections</a></li>
+      <li><a href="#maisons">Maisons</a></li>
+      <li><a href="#univers">Notre Univers</a></li>
+    </ul>
+    <div class="nav-actions">
+      <input type="text" class="search-input" placeholder="Rechercher..." id="searchInput" oninput="filterProducts()">
+      <button class="cart-btn" onclick="openCart()">🛍
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<section class="hero" id="accueil">
+  <div class="hero-bg"></div>
+  <div class="hero-ornament"></div>
+  <div class="hero-content reveal">
+    <p class="hero-eyebrow">Maison de Parfumerie de Luxe</p>
+    <h1 class="hero-title">L'Art du<br><em>Sillage</em></h1>
+    <p class="hero-sub">Des fragrances d'exception, soigneusement sélectionnées pour sublimer votre identité.</p>
+    <a href="#boutique" class="btn-primary">Explorer la Boutique</a>
+    <a href="#collections" class="btn-outline">Nos Collections</a>
+  </div>
+</section>
+
+<section class="featured" id="boutique">
+  <div class="featured-header reveal">
+    <div>
+      <p class="section-eyebrow">Sélection du Moment</p>
+      <h2 class="section-title">Nos Parfums d'Exception</h2>
+    </div>
+    <div>
+      <div class="filter-bar" id="filterBar">
+        <button class="filter-btn active" onclick="setFilter('tous', this)">Tous</button>
+        <button class="filter-btn" onclick="setFilter('femme', this)">Femme</button>
+        <button class="filter-btn" onclick="setFilter('homme', this)">Homme</button>
+        <button class="filter-btn" onclick="setFilter('mixte', this)">Mixte</button>
+        <button class="filter-btn" onclick="setFilter('promo', this)">Promotions</button>
+      </div>
+    </div>
+  </div>
+  <div class="products-grid" id="productsGrid"></div>
+</section>
+
+<section class="banner">
+  <div class="reveal">
+    <p class="section-eyebrow">L'Engagement Lumière</p>
+    <h2 class="section-title" style="color:#fff">Des Fragrances Authentiques<br><em style="color:var(--gold)">et Certifiées</em></h2>
+    <p class="section-sub">Chaque flacon est sélectionné avec soin auprès des plus grandes maisons de parfumerie mondiales. Authenticité garantie, sans exception.</p>
+    <a href="#boutique" class="btn-primary" style="background:var(--gold)">Découvrir</a>
+  </div>
+</section>
+
+<section id="collections">
+  <div class="reveal">
+    <p class="section-eyebrow">Univers Olfactifs</p>
+    <h2 class="section-title">Explorer par Famille</h2>
+  </div>
+  <div class="categories-grid reveal">
+    <div class="cat-item" style="background:#e8dfd0" onclick="setFilter('femme',null)">
+      <div class="cat-bg" style="background:linear-gradient(135deg,#f5e6c0,#e8c97a)">🌸</div>
+      <div class="cat-overlay">
+        <div>
+          <div class="cat-name">Femme</div>
+          <div class="cat-count">Floraux & Orientaux</div>
+        </div>
+      </div>
+    </div>
+    <div class="cat-item" onclick="setFilter('homme',null)">
+      <div class="cat-bg" style="background:linear-gradient(135deg,#d0dce8,#8ab0c9)">🌿</div>
+      <div class="cat-overlay">
+        <div>
+          <div class="cat-name">Homme</div>
+          <div class="cat-count">Boisés & Fougères</div>
+        </div>
+      </div>
+    </div>
+    <div class="cat-item" onclick="setFilter('mixte',null)">
+      <div class="cat-bg" style="background:linear-gradient(135deg,#e8d0d0,#c97a8a)">🫶</div>
+      <div class="cat-overlay">
+        <div>
+          <div class="cat-name">Mixte</div>
+          <div class="cat-count">Signatures & Oud</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="newsletter">
+  <div class="reveal">
+    <p class="section-eyebrow">Newsletter Exclusive</p>
+    <h2 class="section-title">Restez dans l'Air du Temps</h2>
+    <p class="section-sub" style="margin:0 auto 8px">Recevez nos nouveautés, offres exclusives et conseils olfactifs.</p>
+    <div class="newsletter-form">
+      <input type="email" class="newsletter-input" placeholder="Votre adresse e-mail">
+      <button class="newsletter-btn" onclick="subscribeNewsletter()">S'inscrire</button>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="reveal">
+    <p class="section-eyebrow">Ils nous font confiance</p>
+    <h2 class="section-title">Avis de nos clients</h2>
+  </div>
+  <div class="avis-grid" id="avisGrid"></div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#" class="logo">SD<span style="color:var(--gold)">Parfumerie</span></a>
+      <p class="footer-desc">Votre maison de parfumerie de luxe à Abidjan. Authenticité, raffinement et service d'exception depuis 2018.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Boutique</h4>
+      <ul>
+        <li><a href="#">Nouveautés</a></li>
+        <li><a href="#">Bestsellers</a></li>
+        <li><a href="#">Promotions</a></li>
+        <li><a href="#">Coffrets Cadeaux</a></li>
+        <li><a href="#">Échantillons</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Service</h4>
+      <ul>
+        <li><a href="#">Mon Compte</a></li>
+        <li><a href="#">Suivi Commande</a></li>
+        <li><a href="#">Livraison</a></li>
+        <li><a href="#">Retours</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Maison</h4>
+      <ul>
+        <li><a href="#">Notre Histoire</a></li>
+        <li><a href="#">Blog Olfactif</a></li>
+        <li><a href="#">Guide des Parfums</a></li>
+        <li><a href="#">Presse</a></li>
+        <li><a href="#">Boutique Physique</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 SD Parfumerie · Abidjan, Côte d'Ivoire</span>
+    <span>Politique de Confidentialité · CGV</span>
+  </div>
+</footer>
+
+<!-- CART SIDEBAR -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-head">
+    <h3>Mon Panier</h3>
+    <button class="cart-close" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer" id="cartFooter"></div>
+</div>
+
+<!-- PRODUCT MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal-box" id="modalBox">
+    <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    <div class="modal-img" id="modalImg"></div>
+    <div class="modal-info" id="modalInfo"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- CHECKOUT MODAL -->
+<div class="checkout-overlay" id="checkoutOverlay" onclick="if(event.target===this)closeCheckoutModal()">
+  <div class="checkout-box">
+    <button style="float:right;background:none;border:none;font-size:20px;cursor:pointer;color:var(--gray);margin:-8px -8px 0 0" onclick="closeCheckoutModal()">✕</button>
+    <h3>Finaliser la commande</h3>
+    <p>Remplissez vos informations — nous vous contacterons pour confirmer.</p>
+
+    <div class="checkout-summary" id="checkoutSummary"></div>
+
+    <div class="co-group">
+      <label>Nom complet *</label>
+      <input type="text" id="coName" placeholder="ex: Kofi Mensah">
+    </div>
+    <div class="co-group">
+      <label>Téléphone *</label>
+      <input type="tel" id="coPhone" placeholder="ex: 07 XX XX XX XX">
+    </div>
+    <div class="co-group">
+      <label>Adresse de livraison (optionnel)</label>
+      <textarea id="coAddress" placeholder="Quartier, commune, point de repère..."></textarea>
+    </div>
+
+    <button class="checkout-btn" onclick="submitOrder()" style="margin-bottom:10px">Confirmer ma commande</button>
+    <button style="width:100%;padding:12px;background:none;border:1px solid var(--border);font-size:11px;letter-spacing:2px;text-transform:uppercase;font-family:'Jost',sans-serif;cursor:pointer;color:var(--gray)" onclick="closeCheckoutModal()">Retour au panier</button>
+  </div>
+</div>
+
+<script>
+// ============ STORE ============
+const STORE_KEY = 'lumiere_store';
+const CART_KEY = 'lumiere_cart';
+
+function getStore(){
+  const d = localStorage.getItem(STORE_KEY);
+  if(d) return JSON.parse(d);
+  const defaults = {
+    products: [
+      {id:1,name:'Baccarat Rouge 540',house:'Maison Francis Kurkdjian',notes:'Ambre Floral · Jasmin · Cèdre',price:85000,oldPrice:null,category:'mixte',emoji:'🟥',badge:'bestseller',description:'Une création légendaire aux notes ambrées et florales. Ce parfum d\'exception laisse un sillage inoubliable, mêlant jasmin, safran et la chaleur envoûtante du cèdre.',rating:5,inStock:true},
+      {id:2,name:'Sauvage Elixir',house:'Christian Dior',notes:'Boisé Épicé · Cannelle · Santal',price:62000,oldPrice:78000,category:'homme',emoji:'🟦',badge:'promo',description:'Sauvage dans sa forme la plus concentrée. Un parfum d\'une intensité rare, dominé par la cannelle et rehaussé par des nuances boisées profondes.',rating:5,inStock:true},
+      {id:3,name:'Coco Mademoiselle',house:'Chanel',notes:'Floral Oriental · Rose · Patchouli',price:72000,oldPrice:null,category:'femme',emoji:'🌸',badge:'nouveau',description:'La féminité contemporaine incarnée dans un flacon iconique. Une fragrance fraîche et audacieuse qui conjugue élégance et liberté.',rating:5,inStock:true},
+      {id:4,name:'Black Opium',house:'Yves Saint Laurent',notes:'Gourmand · Café · Vanille',price:58000,oldPrice:null,category:'femme',emoji:'⚫',badge:null,description:'Enivrant et magnétique, Black Opium capture l\'essence du rock féminin. L\'accord café intense rencontre la douceur de la vanille et du cachemire.',rating:4,inStock:true},
+      {id:5,name:'Oud Wood',house:'Tom Ford',notes:'Oud · Santal · Vétiver',price:95000,oldPrice:null,category:'mixte',emoji:'🟫',badge:'bestseller',description:'Une interprétation contemporaine de l\'oud précieux. Rare et sophistiqué, ce parfum unisexe marie le bois de rose exotique aux épices chaudes.',rating:5,inStock:true},
+      {id:6,name:'Aventus',house:'Creed',notes:'Fruité Boisé · Pomme · Bouleau',price:110000,oldPrice:null,category:'homme',emoji:'👑',badge:'premium',description:'La quintessence de la masculinité triomphante. Créé en hommage aux empereurs et leaders, Aventus célèbre la puissance et le succès.',rating:5,inStock:true},
+      {id:7,name:'La Vie est Belle',house:'Lancôme',notes:'Floral Gourmand · Iris · Praline',price:54000,oldPrice:65000,category:'femme',emoji:'🌺',badge:'promo',description:'Un hymne à la beauté et au bonheur. La Vie est Belle allie la noblesse de l\'iris et du patchouli à la délicieuse douceur de la praline.',rating:4,inStock:true},
+      {id:8,name:'Bleu de Chanel',house:'Chanel',notes:'Boisé Aromatique · Agrumes · Encens',price:68000,oldPrice:null,category:'homme',emoji:'🔵',badge:null,description:'Une déclaration d\'indépendance olfactive. Bleu de Chanel est un voyage imaginaire entre ciel et mer, une fragrance libre et tonique.',rating:5,inStock:true},
+    ],
+    siteInfo:{
+      heroTitle:'L\'Art du Sillage',
+      heroSub:'Des fragrances d\'exception, soigneusement sélectionnées pour sublimer votre identité.',
+      promoBar:'✦ Livraison gratuite dès 75 000 FCFA · Code : LUMIERE10 pour -10% ✦',
+    },
+    avis:[
+      {text:'Un service exceptionnel et des parfums absolument authentiques. Je ne vais nulle part ailleurs.',author:'Amina K., Cocody'},
+      {text:'Le Baccarat Rouge 540 était introuvable à Abidjan. Lumière l\'a eu ! Livraison rapide et soignée.',author:'Kofi M., Plateau'},
+      {text:'Packaging magnifique, conseils personnalisés par WhatsApp. Une boutique vraiment haut de gamme.',author:'Sophie D., Marcory'},
+    ],
+    orders:[],
+    settings:{currency:'FCFA',whatsapp:'2250700000000',email:'contact@lumiere-parfumerie.ci'}
+  };
+  localStorage.setItem(STORE_KEY, JSON.stringify(defaults));
+  return defaults;
+}
+
+function saveStore(s){localStorage.setItem(STORE_KEY,JSON.stringify(s))}
+function getCart(){return JSON.parse(localStorage.getItem(CART_KEY)||'[]')}
+function saveCart(c){localStorage.setItem(CART_KEY,JSON.stringify(c))}
+
+let store = getStore();
+let cart = getCart();
+let currentFilter = 'tous';
+let searchTerm = '';
+
+// ============ RENDER PRODUCTS ============
+function renderProducts(){
+  const grid = document.getElementById('productsGrid');
+  let prods = store.products.filter(p=>{
+    const catOk = currentFilter==='tous'||(currentFilter==='promo'?p.oldPrice!==null:p.category===currentFilter);
+    const searchOk = !searchTerm || p.name.toLowerCase().includes(searchTerm)||p.house.toLowerCase().includes(searchTerm)||p.notes.toLowerCase().includes(searchTerm);
+    return catOk && searchOk && p.inStock;
+  });
+  if(!prods.length){
+    grid.innerHTML='<div class="no-products"><p>Aucun parfum trouvé</p><span>Essayez une autre recherche ou catégorie</span></div>';
+    return;
+  }
+  grid.innerHTML = prods.map(p=>`
+    <div class="product-card reveal" onclick="openModal(${p.id})">
+      <div class="product-img">
+        <div class="product-img-inner">${p.photo ? `<img src="${p.photo}" style="width:100%;height:100%;object-fit:cover">` : `<span style="font-size:80px">${p.emoji||'🌸'}</span>`}</div>
+        ${p.badge?`<div class="product-badge ${p.badge==='nouveau'?'nouveau':''}">${p.badge}</div>`:''}
+        <button class="product-wishlist" onclick="event.stopPropagation();showToast('Ajouté aux favoris ✦')">♡</button>
+      </div>
+      <div class="product-info">
+        <div class="stars">${'★'.repeat(p.rating)}${'☆'.repeat(5-p.rating)}</div>
+        <div class="product-house">${p.house}</div>
+        <div class="product-name">${p.name}</div>
+        <div class="product-notes">${p.notes}</div>
+        <div class="product-bottom">
+          <div>
+            ${p.oldPrice?`<span class="product-old-price">${p.oldPrice.toLocaleString()} FCFA</span>`:''}
+            <span class="product-price">${p.price.toLocaleString()} FCFA</span>
+          </div>
+          <button class="add-cart-btn" onclick="event.stopPropagation();addToCart(${p.id})">Ajouter</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  observeReveal();
+}
+
+function setFilter(f, el){
+  currentFilter=f;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  if(el) el.classList.add('active');
+  renderProducts();
+  document.getElementById('boutique').scrollIntoView({behavior:'smooth'});
+}
+
+function filterProducts(){
+  searchTerm = document.getElementById('searchInput').value.toLowerCase();
+  renderProducts();
+}
+
+// ============ CART ============
+function addToCart(id, size='50ml'){
+  const p = store.products.find(x=>x.id===id);
+  if(!p) return;
+  const idx = cart.findIndex(x=>x.id===id&&x.size===size);
+  if(idx>-1) cart[idx].qty++;
+  else cart.push({id,name:p.name,house:p.house,emoji:p.emoji,photo:p.photo||'',price:p.price,size,qty:1});
+  saveCart(cart);
+  updateCartCount();
+  showToast(`${p.name} ajouté au panier ✦`);
+}
+
+function removeFromCart(id){
+  cart = cart.filter(x=>x.id!==id);
+  saveCart(cart);
+  updateCartCount();
+  renderCart();
+}
+
+function changeQty(id, delta){
+  const idx = cart.findIndex(x=>x.id===id);
+  if(idx===-1) return;
+  cart[idx].qty = Math.max(1, cart[idx].qty+delta);
+  saveCart(cart);
+  updateCartCount();
+  renderCart();
+}
+
+function updateCartCount(){
+  const total = cart.reduce((s,x)=>s+x.qty,0);
+  document.getElementById('cartCount').textContent=total;
+}
+
+function openCart(){
+  document.getElementById('cartOverlay').classList.add('open');
+  document.getElementById('cartSidebar').classList.add('open');
+  renderCart();
+}
+
+function closeCart(){
+  document.getElementById('cartOverlay').classList.remove('open');
+  document.getElementById('cartSidebar').classList.remove('open');
+}
+
+function renderCart(){
+  const el = document.getElementById('cartItems');
+  const footer = document.getElementById('cartFooter');
+  if(!cart.length){
+    el.innerHTML='<div class="cart-empty"><p>Votre panier est vide</p><span>Explorez nos fragrances d\'exception</span></div>';
+    footer.innerHTML='';
+    return;
+  }
+  el.innerHTML = cart.map(item=>`
+    <div class="cart-item">
+      <div class="cart-item-img">${item.photo ? `<img src="${item.photo}" style="width:70px;height:70px;object-fit:cover">` : `<span style="font-size:32px">${item.emoji||'🌸'}</span>`}</div>
+      <div class="cart-item-info">
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-sub">${item.house} · ${item.size}</div>
+        <div class="cart-item-price">${(item.price*item.qty).toLocaleString()} FCFA</div>
+        <div class="qty-ctrl">
+          <button class="qty-btn" onclick="changeQty(${item.id},-1)">−</button>
+          <span class="qty-num">${item.qty}</span>
+          <button class="qty-btn" onclick="changeQty(${item.id},1)">+</button>
+        </div>
+      </div>
+      <button class="remove-btn" onclick="removeFromCart(${item.id})">✕</button>
+    </div>
+  `).join('');
+  const subtotal = cart.reduce((s,x)=>s+x.price*x.qty,0);
+  const livraison = subtotal>=75000?0:3500;
+  footer.innerHTML=`
+    <div class="cart-subtotal"><span>Sous-total</span><span>${subtotal.toLocaleString()} FCFA</span></div>
+    <div class="cart-subtotal"><span>Livraison</span><span>${livraison===0?'<span style="color:green">Gratuite</span>':livraison.toLocaleString()+' FCFA'}</span></div>
+    <div class="cart-total"><span>Total</span><span>${(subtotal+livraison).toLocaleString()} FCFA</span></div>
+    <button class="checkout-btn" onclick="openCheckoutModal()">Commander →</button>
+    <button style="width:100%;padding:12px;background:none;border:1px solid var(--border);font-size:11px;letter-spacing:2px;text-transform:uppercase;font-family:'Jost',sans-serif;cursor:pointer;color:var(--gray)" onclick="closeCart()">Continuer mes achats</button>
+  `;
+}
+
+function openCheckoutModal(){
+  if(!cart.length) return;
+  const subtotal = cart.reduce((s,x)=>s+x.price*x.qty,0);
+  const livraison = subtotal>=75000?0:3500;
+  document.getElementById('checkoutSummary').innerHTML=`
+    <div class="checkout-summary-title">Récapitulatif</div>
+    ${cart.map(i=>`<div class="checkout-summary-row"><span>${i.name} × ${i.qty}</span><span>${(i.price*i.qty).toLocaleString()} FCFA</span></div>`).join('')}
+    <div class="checkout-summary-row"><span>Livraison</span><span>${livraison===0?'<span style="color:green">Gratuite</span>':livraison.toLocaleString()+' FCFA'}</span></div>
+    <div class="checkout-summary-total"><span>Total</span><span>${(subtotal+livraison).toLocaleString()} FCFA</span></div>
+  `;
+  document.getElementById('checkoutOverlay').classList.add('open');
+}
+
+function closeCheckoutModal(){
+  document.getElementById('checkoutOverlay').classList.remove('open');
+}
+
+function submitOrder(){
+  const name = document.getElementById('coName').value.trim();
+  const phone = document.getElementById('coPhone').value.trim();
+  const address = document.getElementById('coAddress').value.trim();
+  if(!name || !phone){ showToast('Veuillez remplir votre nom et téléphone'); return; }
+
+  const total = cart.reduce((s,x)=>s+x.price*x.qty,0);
+  const livraison = total>=75000?0:3500;
+  const order = {
+    id:'CMD-'+Date.now(),
+    date:new Date().toISOString(),
+    items:[...cart],
+    total: total+livraison,
+    status:'nouveau',
+    customer:{name, phone, address}
+  };
+  store = getStore();
+  store.orders = store.orders || [];
+  store.orders.unshift(order);
+  saveStore(store);
+
+  cart=[];
+  saveCart(cart);
+  updateCartCount();
+  closeCheckoutModal();
+  closeCart();
+  showToast('Commande confirmée ! Nous vous contacterons bientôt ✦');
+}
+
+// ============ MODAL ============
+function openModal(id){
+  const p = store.products.find(x=>x.id===id);
+  if(!p) return;
+  document.getElementById('modalImg').innerHTML= p.photo
+    ? `<img src="${p.photo}" style="width:100%;height:100%;object-fit:cover">`
+    : `<div style="font-size:140px;display:flex;align-items:center;justify-content:center;height:100%">${p.emoji||'🌸'}</div>`;
+  document.getElementById('modalInfo').innerHTML=`
+    <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    <div class="modal-house">${p.house}</div>
+    <h2 class="modal-name">${p.name}</h2>
+    <div class="modal-notes">${p.notes}</div>
+    <div class="stars" style="font-size:14px;margin-bottom:8px">${'★'.repeat(p.rating)}${'☆'.repeat(5-p.rating)}</div>
+    <p class="modal-desc">${p.description}</p>
+    <div class="modal-price">${p.price.toLocaleString()} FCFA</div>
+    <select class="size-select" id="modalSize">
+      <option value="30ml">30 ml</option>
+      <option value="50ml" selected>50 ml</option>
+      <option value="100ml">100 ml</option>
+    </select>
+    <button class="modal-add" onclick="addToCart(${p.id}, document.getElementById('modalSize').value); closeModalDirect()">Ajouter au panier</button>
+  `;
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function closeModal(e){if(e.target===document.getElementById('modalOverlay'))closeModalDirect()}
+function closeModalDirect(){document.getElementById('modalOverlay').classList.remove('open')}
+
+// ============ AVIS ============
+function renderAvis(){
+  const grid = document.getElementById('avisGrid');
+  grid.innerHTML = store.avis.map(a=>`
+    <div class="avis-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="avis-text">"${a.text}"</p>
+      <div class="avis-author">— ${a.author}</div>
+    </div>
+  `).join('');
+}
+
+// ============ SCROLL REVEAL ============
+function observeReveal(){
+  const obs = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
+  },{threshold:0.1});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+}
+
+// ============ TOAST ============
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+function subscribeNewsletter(){
+  showToast('Inscription confirmée ! Bienvenue ✦');
+}
+
+// ============ INIT ============
+function init(){
+  store = getStore();
+  cart = getCart();
+  renderProducts();
+  renderAvis();
+  updateCartCount();
+  observeReveal();
+  
+  // Listen for store updates from admin
+  window.addEventListener('storage', e=>{
+    if(e.key===STORE_KEY){
+      store=JSON.parse(e.newValue||'{}');
+      renderProducts();
+      renderAvis();
+      document.querySelector('.promo-bar').textContent=store.siteInfo?.promoBar||'';
+    }
+  });
+}
+
+init();
+</script>
+</body>
+</html>
